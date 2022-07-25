@@ -2,6 +2,8 @@ package hello.core.beanfind;
 
 import hello.core.AppConfig;
 import hello.core.discount.DiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import org.junit.jupiter.api.Assertions;
@@ -76,6 +78,16 @@ class ApplicationContextSameBeanFindTest {
         @Bean
         public MemberRepository memberRepository2() {
             return new MemoryMemberRepository();
+        }
+
+        @Bean
+        public DiscountPolicy discountPolicy1() {
+            return new FixDiscountPolicy();
+        }
+
+        @Bean
+        public DiscountPolicy discountPolicy2() {
+            return new RateDiscountPolicy();
         }
     }
 }
