@@ -39,6 +39,12 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    // addForm 과 save 에서 URL 은 서로 같게, 대신 HTTP method 를 통해 서로 기능 구분해주는 것.
+    @GetMapping("/add")
+    public String addForm() {
+        return "basic/addForm";
+    }
+
     /**
      * 테스트용 데이터 추가
      */
