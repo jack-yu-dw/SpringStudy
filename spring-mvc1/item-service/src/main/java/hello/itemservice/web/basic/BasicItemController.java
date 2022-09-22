@@ -105,6 +105,33 @@ public class BasicItemController {
     }
 
     /**
+     * 상품 수정은 상품 등록과 전체 프로세스가 유사하다.
+     * GET /items/{itemId}/edit : 상품 수정 폼
+     * POST /items/{itemId}/edit : 상품 수정 처리
+     */
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/editForm";
+    }
+
+    /**
+     * 리다이렉트
+     * 상품 수정은 마지막에 뷰 템플릿을 호출하는 대신에 상품 상세 화면으로 이동하도록 리다이렉트를 호출한다.
+     *
+     * 스프링은 redirect:/... 으로 편리하게 리다이렉트를 지원한다.
+     * redirect:/basic/items/{itemId}
+     * 컨트롤러에 매핑된 @PathVariable 의 값은 redirect 에도 사용 할 수 있다.
+     * redirect:/basic/items/{itemId} => {itemId} 는 @PathVariable Long itemId 의 값을 그대로 사용한다.
+     */
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
+        itemRepository.update(itemId, item);
+        return "redirect:/basic/items/{itemId}";    // 리다이렉트 사용
+    }
+
+    /**
      * 테스트용 데이터 추가
      */
     @PostConstruct
